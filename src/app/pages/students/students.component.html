@@ -1,0 +1,96 @@
+<!-- 
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Exam Full App Flutter
+  This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2023-present initappz.
+-->
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div class="animated fadeIn">
+    <div class="row mb-2">
+        <div class="col-lg-12">
+            <div class="card card-profile shadow">
+
+                <div class="card-body pt-0 pt-md-4">
+                    <div class="row flex_row">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control form-control-lg" id="name"
+                                [placeholder]="util.translate('Search User')" (input)="search($event.target.value)">
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select id="select1" [(ngModel)]="studiesId" [ngModelOptions]="{standalone: true}"
+                                name="select1" class="form-control" (change)="onStudiesChangeds()">
+                                <option [value]="0"> {{util.translate('Select Studies')}} </option>
+                                <option *ngFor="let item of studies" [value]="item.id"> {{item.name}} </option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select id="select1" name="select1" [(ngModel)]="termsId"
+                                [ngModelOptions]="{standalone: true}" class="form-control" [disabled]="!terms?.length">
+                                <option [value]="0"> {{util.translate('Select Terms')}} </option>
+                                <option *ngFor="let item of terms" [value]="item.id"> {{item.name}} </option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-1">
+                            <button type="submit" class="btn btn-light" style="float: right;" (click)="clear()">
+                                {{util.translate('Clear')}}
+                            </button>
+                        </div>
+
+                        <div class="col-lg-1">
+                            <button type="submit" class="btn btn-primary" style="float: right;" (click)="filter()">
+                                {{util.translate('Filter')}}
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-responsive-sm table-hover mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">{{util.translate('Enroll No.')}}</th>
+                                <th scope="col">{{util.translate('Student Name')}}</th>
+                                <th scope="col">{{util.translate('Terms Name')}}</th>
+                                <th scope="col">{{util.translate('Studies Name')}}</th>
+                                <th scope="col">{{util.translate('Email')}}</th>
+                                <th scope="col">{{util.translate('Mobile')}}</th>
+                                <th scope="col">{{util.translate('Actions')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dummy">
+                                <td *ngFor="let item of [1,2,3,4,5,6,7]">
+                                    <ngx-skeleton-loader animation="progress"></ngx-skeleton-loader>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: 6, currentPage: page }">
+                                <td> {{item.enroll}} </td>
+                                <td> {{item.first_name +' '+ item.last_name}} </td>
+                                <td> {{item.terms.name}} </td>
+                                <td> {{item.studies.name}} </td>
+                                <td> {{item.email}} </td>
+                                <td> {{item.mobile}} </td>
+                                <td>
+                                    <c-badge [color]="item.status == 1 ? 'success' :'dark'"
+                                        [class]="item.status == 1 ? 'me-1 badge bg-success' :'me-1 badge bg-dark' "
+                                        (click)="changeStatus(item)">
+                                        {{item.status == 1 ?util.translate('Active'): util.translate('Deactived')}}
+                                    </c-badge>
+                                    <c-badge color="primary" class="me-1 badge bg-info" (click)="openStudent(item)">
+                                        {{util.translate('View')}}
+                                    </c-badge>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="list?.length > 0">
+                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

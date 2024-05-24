@@ -1,0 +1,135 @@
+<!-- 
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Exam Full App Flutter
+  This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2023-present initappz.
+-->
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div class="animated fadeIn">
+    <div class="row mb-2">
+        <div class="col-xl-4 order-xl-1">
+            <div class="card shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="mb-0"> {{util.translate("Terms Information")}} </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="logoContainer">
+                                <img [src]="api.imageUrl+ cover" onError="this.src='assets/img/dummy.jpeg'">
+                            </div>
+                            <div class="fileContainer sprite">
+                                <span> {{util.translate('Add Cover')}} </span>
+                                <input (change)="preview_banner($event.target.files)" type="file" value="Choose File">
+                            </div>
+                            <div class="center-data-helper">
+                                <p class="text-heler">
+                                    {{util.translate(".jpg, .jpeg, .png, .bmp recommended size (512 X 512) pixels")}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-username">{{util.translate('Terms Name')}}
+                                </label>
+                                <input type="text" id="input-username" class="form-control form-control-alternative"
+                                    [ngModelOptions]="{standalone: true}" [placeholder]="util.translate('Terms Name')"
+                                    [(ngModel)]="name">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-username">
+                                    {{util.translate('Select Study')}} </label>
+                                <select id="select2" [(ngModel)]="studies_id" name="select2"
+                                    [ngModelOptions]="{standalone: true}" class="form-control form-control-alternative">
+                                    <option [value]="item.id" *ngFor="let item of studies"> {{item.name}} </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="d-flex justify-content-start">
+                                    <button *ngIf="isEdit == false" type="button" class="btn btn-success"
+                                        (click)="saveData()">
+                                        <span> {{util.translate('Save')}} </span>
+                                    </button>
+                                    <button *ngIf="isEdit == true" type="button" class="btn btn-success"
+                                        (click)="updateData()">
+                                        <span> {{util.translate('Update')}} </span>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" (click)="clearData()">
+                                        {{util.translate('Clear')}} </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 order-xl-2 mb-5 mb-xl-0">
+            <div class="card card-profile shadow">
+
+                <div class="card-body pt-0 pt-md-4">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"> {{util.translate('Id')}} </th>
+                                <th scope="col"> {{util.translate('Cover')}} </th>
+                                <th scope="col"> {{util.translate('Name')}} </th>
+                                <th scope="col"> {{util.translate('Study Name')}} </th>
+                                <th scope="col"> {{util.translate('Action')}} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dummy">
+                                <td *ngFor="let item of [1,2,3,4,5]">
+                                    <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let item of list | paginate: {id:'pagin1', itemsPerPage: 6, currentPage: page }">
+                                <th scope="row">
+                                    {{item.id}}
+                                </th>
+                                <td>
+                                    <img class="img-responsive" style="height: 40px;width: 40px; object-fit: cover;"
+                                        [src]="api.imageUrl + item.cover" onError="this.src='assets/img/dummy.jpeg'">
+                                </td>
+                                <td>
+                                    {{item.name}}
+                                </td>
+                                <td> {{item.study.name}} </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <c-badge [color]="item.status == 1 ? 'success' :'dark'"
+                                            [class]="item.status == 1 ? 'me-1 badge bg-success' :'me-1 badge bg-dark' "
+                                            (click)="statusUpdate(item)">
+                                            {{item.status == 1 ?util.translate('Active'): util.translate('Deactived')}}
+                                        </c-badge>
+                                        <c-badge color="primary" class="me-1 badge bg-info" (click)="editData(item)">
+                                            {{util.translate('Edit')}}
+                                        </c-badge>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div *ngIf="list?.length > 0">
+                        <pagination-controls id="pagin1" (pageChange)="page = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

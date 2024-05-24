@@ -1,0 +1,400 @@
+<!-- 
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Exam Full App Flutter
+  This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2023-present initappz.
+-->
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-xl-4 order-xl-1">
+            <div class="card  shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">{{util.translate('Subjects Information')}} </h3>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4 b-r-default">
+                            <p class="text-muted"></p>
+                            <span> {{util.translate('Studies')}} . </span> <br>
+                            <span style="font-weight: bold;"> {{studies}} </span>
+                        </div>
+
+                        <div class="col-4 b-r-default">
+                            <p class="text-muted"></p>
+                            <span>{{util.translate('Terms')}} .</span> <br>
+                            <span style="font-weight: bold;"> {{terms}} </span>
+                        </div>
+
+                        <div class="col-4">
+                            <p class="text-muted"></p>
+                            <span>{{util.translate('Subjects')}}.</span> <br>
+                            <span style="font-weight: bold;"> {{subjects}} </span>
+                        </div>
+
+                        <div class="col-4">
+                            <p class="text-muted"></p>
+                            <span>{{util.translate('Total Questions')}}.</span> <br>
+                            <span style="font-weight: bold;"> {{totalQuestions}} </span>
+                        </div>
+
+                        <div class="col-4">
+                            <p class="text-muted"></p>
+                            <span>{{util.translate('Passing Marks')}}.</span> <br>
+                            <span style="font-weight: bold;"> {{passingMarks}} </span>
+                        </div>
+
+                        <div class="col-4">
+                            <p class="text-muted"></p>
+                            <span>{{util.translate('Nagative Marks')}}.</span> <br>
+                            <span style="font-weight: bold;"> {{negativeMarks}} </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 order-xl-2 mb-5 mb-xl-0">
+            <div class="card card-profile shadow">
+                <c-nav variant="tabs">
+                    <c-nav-item *ngFor="let nav of panes; index as i; first as isFirst; last as isLast">
+                        <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="i" cNavLink>
+                            {{nav.name}}
+                        </a>
+                    </c-nav-item>
+                </c-nav>
+                <c-tab-content #tabContent="cTabContent" (activeTabPaneIdxChange)="onTabChange($event)"
+                    [activeTabPaneIdx]="activePane">
+                    <c-tab-pane>
+                        <p style="text-align:center;font-weight: bold;" *ngIf="!dummy?.length && !exams?.length">
+                            {{util.translate('No Data Found!')}} </p>
+                        <div class="orders">
+                            <div class="single_notification" *ngFor="let item of dummy">
+                                <div class="order_detail">
+                                    <div>
+                                        <div expand="block" class="order_btn" mode="ios">
+                                            ###
+                                        </div>
+                                    </div>
+                                </div>
+                                <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
+                            </div>
+                            <div class="single_notification"
+                                *ngFor="let item of exams | paginate: {id:'pagin1', itemsPerPage: 10, currentPage: pages }">
+                                <div class="order_detail">
+                                    <div>
+                                        <div expand="block" class="order_btn" mode="ios">
+                                            #{{item.id}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product_detail">
+                                    <div class="pro_detail">
+                                        <label class="pro_name"> {{name}} </label> <br>
+                                        <label class="grey_lbl">{{studies}} |
+                                            {{subjects}} | {{terms}} </label>
+                                    </div>
+                                </div>
+
+                                <div class="product_detail">
+                                    <div class="pro_detail">
+                                        <label class="pro_name"> {{item.user.first_name +' '+
+                                            item.user.last_name}} </label> <br>
+                                        <label class="grey_lbl"> {{util.translate('Enroll')}}:
+                                            {{item.user.enroll}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="delivery_detail">
+
+                                    <div>
+                                        <label class="status_lbl"><span>
+                                                {{util.translate('Gained Marks')}}:
+                                            </span>
+                                            {{item.gained}} / {{item.total}}
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="status_lbl" style="color: black;">
+                                            <span>{{util.translate('Exam Result')}}:
+                                            </span>
+                                            <span *ngIf="item.result == 1" style="color: green;">
+                                                {{util.translate('Passed')}}
+                                            </span>
+                                            <span *ngIf="item.result == 0" style="color: red;">
+                                                {{util.translate('Failed')}}
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="exams?.length > 0">
+                                <pagination-controls id="pagin1" (pageChange)="pages = $event">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </c-tab-pane>
+
+                    <c-tab-pane>
+                        <p style="text-align:center;font-weight: bold;" *ngIf="!dummy?.length && !toppper?.length">
+                            {{util.translate('No Data Found!')}} </p>
+                        <div class="orders">
+                            <div class="single_notification" *ngFor="let item of dummy">
+                                <div class="order_detail">
+                                    <div>
+                                        <div expand="block" class="order_btn" mode="ios">
+                                            ###
+                                        </div>
+                                    </div>
+                                </div>
+                                <ngx-skeleton-loader count="1" appearance="line">
+                                </ngx-skeleton-loader>
+                                <ngx-skeleton-loader count="1" appearance="line">
+                                </ngx-skeleton-loader>
+                                <ngx-skeleton-loader count="1" appearance="line">
+                                </ngx-skeleton-loader>
+                            </div>
+                            <div class="single_notification" *ngFor="let item of toppper;let i = index">
+                                <div class="order_detail">
+                                    <div>
+                                        <div expand="block" class="order_btn" mode="ios">
+                                            #{{item.id}}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product_detail">
+                                    <div class="pro_detail">
+                                        <label class="pro_name"> {{name}} </label> <br>
+                                        <label class="indexNum"> {{i+1}} </label> <br>
+                                        <label class="grey_lbl">{{studies}} |
+                                            {{subjects}} | {{terms}} </label>
+                                    </div>
+                                </div>
+
+                                <div class="product_detail">
+                                    <div class="pro_detail">
+                                        <label class="pro_name"> {{item.user.first_name +' '+
+                                            item.user.last_name}} </label> <br>
+                                        <label class="grey_lbl"> {{util.translate('Enroll')}}:
+                                            {{item.user.enroll}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="delivery_detail">
+
+                                    <div>
+                                        <label class="status_lbl"><span>
+                                                {{util.translate('Gained Marks')}}:
+                                            </span>
+                                            {{item.gained}} / {{item.total}}
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="status_lbl" style="color: black;">
+                                            <span>{{util.translate('Exam Result')}}:
+                                            </span>
+                                            <span *ngIf="item.result == 1" style="color: green;">
+                                                {{util.translate('Passed')}}
+                                            </span>
+                                            <span *ngIf="item.result == 0" style="color: red;">
+                                                {{util.translate('Failed')}}
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </c-tab-pane>
+                </c-tab-content>
+
+                <!-- <div class="card-body pt-0 pt-md-4">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                        <li [ngbNavItem]="1">
+                            <a ngbNavLink>{{util.translate('Attempted')}} </a>
+                            <ng-template ngbNavContent>
+                                <p style="text-align:center;font-weight: bold;"
+                                    *ngIf="!dummy?.length && !exams?.length">
+                                    {{util.translate('No Data Found!')}} </p>
+                                <div class="orders">
+                                    <div class="single_notification" *ngFor="let item of dummy">
+                                        <div class="order_detail">
+                                            <div>
+                                                <div expand="block" class="order_btn" mode="ios">
+                                                    ###
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
+                                        <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
+                                        <ngx-skeleton-loader count="1" appearance="line"></ngx-skeleton-loader>
+                                    </div>
+                                    <div class="single_notification"
+                                        *ngFor="let item of exams | paginate: {id:'pagin1', itemsPerPage: 10, currentPage: pages }">
+                                        <div class="order_detail">
+                                            <div>
+                                                <div expand="block" class="order_btn" mode="ios">
+                                                    #{{item.id}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="product_detail">
+                                            <div class="pro_detail">
+                                                <label class="pro_name"> {{name}} </label> <br>
+                                                <label class="grey_lbl">{{studies}} |
+                                                    {{subjects}} | {{terms}} </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="product_detail">
+                                            <div class="pro_detail">
+                                                <label class="pro_name"> {{item.user.first_name +' '+
+                                                    item.user.last_name}} </label> <br>
+                                                <label class="grey_lbl"> {{util.translate('Enroll')}}:
+                                                    {{item.user.enroll}}
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="delivery_detail">
+
+                                            <div>
+                                                <label class="status_lbl"><span>
+                                                        {{util.translate('Gained Marks')}}:
+                                                    </span>
+                                                    {{item.gained}} / {{item.total}}
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="status_lbl" style="color: black;">
+                                                    <span>{{util.translate('Exam Result')}}:
+                                                    </span>
+                                                    <span *ngIf="item.result == 1" style="color: green;">
+                                                        {{util.translate('Passed')}}
+                                                    </span>
+                                                    <span *ngIf="item.result == 0" style="color: red;">
+                                                        {{util.translate('Failed')}}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div *ngIf="exams?.length > 0">
+                                        <pagination-controls id="pagin1" (pageChange)="pages = $event">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2">
+                            <a ngbNavLink>{{util.translate("Exam Topper")}} </a>
+                            <ng-template ngbNavContent>
+                                <p style="text-align:center;font-weight: bold;"
+                                    *ngIf="!dummy?.length && !toppper?.length">
+                                    {{util.translate('No Data Found!')}} </p>
+                                <div class="orders">
+                                    <div class="single_notification" *ngFor="let item of dummy">
+                                        <div class="order_detail">
+                                            <div>
+                                                <div expand="block" class="order_btn" mode="ios">
+                                                    ###
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ngx-skeleton-loader count="1" appearance="line">
+                                        </ngx-skeleton-loader>
+                                        <ngx-skeleton-loader count="1" appearance="line">
+                                        </ngx-skeleton-loader>
+                                        <ngx-skeleton-loader count="1" appearance="line">
+                                        </ngx-skeleton-loader>
+                                    </div>
+                                    <div class="single_notification" *ngFor="let item of toppper;let i = index">
+                                        <div class="order_detail">
+                                            <div>
+                                                <div expand="block" class="order_btn" mode="ios">
+                                                    #{{item.id}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="product_detail">
+                                            <div class="pro_detail">
+                                                <label class="pro_name"> {{name}} </label> <br>
+                                                <label class="indexNum"> {{i+1}} </label> <br>
+                                                <label class="grey_lbl">{{studies}} |
+                                                    {{subjects}} | {{terms}} </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="product_detail">
+                                            <div class="pro_detail">
+                                                <label class="pro_name"> {{item.user.first_name +' '+
+                                                    item.user.last_name}} </label> <br>
+                                                <label class="grey_lbl"> {{util.translate('Enroll')}}:
+                                                    {{item.user.enroll}}
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="delivery_detail">
+
+                                            <div>
+                                                <label class="status_lbl"><span>
+                                                        {{util.translate('Gained Marks')}}:
+                                                    </span>
+                                                    {{item.gained}} / {{item.total}}
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="status_lbl" style="color: black;">
+                                                    <span>{{util.translate('Exam Result')}}:
+                                                    </span>
+                                                    <span *ngIf="item.result == 1" style="color: green;">
+                                                        {{util.translate('Passed')}}
+                                                    </span>
+                                                    <span *ngIf="item.result == 0" style="color: red;">
+                                                        {{util.translate('Failed')}}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </ng-template>
+                        </li>
+
+                    </ul>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                </div> -->
+            </div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,180 @@
+/*
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Exam Full App Flutter
+  This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2023-present initappz.
+*/
+.back_image {
+    height: 130px;
+    width: 110px;
+    min-width: 110px !important;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    min-width: 50px;
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.product_image {
+    width: 110px;
+    min-width: 110px;
+    height: 130px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+}
+
+.orders {
+
+    .single_notification {
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        background-color: white;
+        cursor: pointer;
+
+        .order_detail {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #eee;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+
+            .order_btn {
+                --background: #222222;
+                --border-radius: 3px;
+                font-size: 14px;
+                letter-spacing: 0.5px;
+            }
+        }
+
+        .product_detail {
+            display: flex;
+            border-bottom: 1px solid lightgrey;
+            padding: 10px;
+
+            .back_image {
+                height: 90px;
+                width: 90px;
+                min-width: 90px;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border-radius: 5px;
+            }
+
+            .pro_detail {
+                margin-left: 10px;
+                width: 100%;
+                position: relative;
+
+                .pro_name {
+                    font-size: 16px;
+                    text-align: left;
+                }
+
+                .grey_lbl {
+                    font-size: 14px;
+                    color: grey;
+                    text-align: left;
+                }
+
+                .price_flex {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    position: absolute;
+                    width: 100%;
+                    bottom: 0;
+
+                    .qty_lbl {
+                        font-size: 14px;
+                    }
+
+                    .variants {
+                        font-size: 9px;
+                        color: gray;
+                        text-align: end;
+                    }
+                }
+            }
+        }
+
+        .delivery_detail {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+
+            .status_lbl {
+                font-size: 13px;
+                text-align: right;
+                white-space: nowrap;
+
+            }
+        }
+    }
+}
+
+.review {
+    // height: 60vh;
+    // overflow: scroll;
+
+    .row_div {
+        border-bottom: 1px solid lightgray;
+        padding: 10px;
+        display: flex;
+
+        .product_image {
+            width: 110px;
+            min-width: 110px;
+            height: 130px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 5px;
+        }
+
+        .detail_div {
+            margin-left: 16px;
+
+
+            .review_star {
+                display: flex;
+
+                .deactive {
+                    color: gray;
+                }
+
+                .active {
+                    color: #f1c40f;
+                }
+
+                span {
+                    margin-right: 3px;
+                }
+            }
+
+            .text_lbl {
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+.address {
+    .address_item {
+        border: 1px solid lightgray;
+        border-radius: 3px;
+        padding: 10px;
+        margin: 10px 0px;
+    }
+}

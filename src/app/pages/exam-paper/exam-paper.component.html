@@ -1,0 +1,333 @@
+<!-- 
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Exam Full App Flutter
+  This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2023-present initappz.
+-->
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong> {{util.translate('Exam')}} </strong> {{util.translate('Informations')}}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="logoContainer">
+                                <img [src]="api.imageUrl+ cover"
+                                    [class]="submitted == true && cover =='' ? 'red_border':''"
+                                    onError="this.src='assets/img/dummy.jpeg'">
+                            </div>
+                            <div class="fileContainer sprite">
+                                <span> {{util.translate('Add Cover')}} </span>
+                                <input (change)="preview_banner($event.target.files)" type="file" value="Choose File">
+                            </div>
+                            <div class="center-data-helper">
+                                <p class="text-heler">
+                                    {{util.translate(" .jpg, .jpeg, .png, .bmp recommended size (512 X 512) pixels")}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email"> {{util.translate('Exam Name')}} </label>
+                                    <input type="text" class="form-control" [placeholder]="util.translate('Exam Name')"
+                                        autocomplete="off" [(ngModel)]="examName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email"> {{util.translate('Examiner Name')}}
+                                    </label>
+                                    <input type="text" class="form-control"
+                                        [placeholder]=" util.translate('Examiner Name') " autocomplete="off"
+                                        [(ngModel)]="examinerName">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email"> {{util.translate('Examiner Phone')}}
+                                    </label>
+                                    <input type="number" class="form-control"
+                                        [placeholder]="util.translate('Examiner Phone')" autocomplete="off"
+                                        [(ngModel)]="examinerPhone">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email"> {{util.translate('Examiner Position')}}
+                                    </label>
+                                    <input type="text" class="form-control"
+                                        [placeholder]="util.translate('Examiner Position')" autocomplete="off"
+                                        [(ngModel)]="examinerPosition">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="select1"> {{util.translate('Select Studies')}}
+                                    </label>
+                                    <select id="select1" [(ngModel)]="studiesId" name="select1" class="form-control"
+                                        (change)="onStudiesChangeds()">
+                                        <option [value]="0"> {{util.translate('Please select')}} </option>
+                                        <option *ngFor="let item of studies" [value]="item.id"> {{item.name}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="select1"> {{util.translate('Select Terms')}} </label>
+                                    <select id="select1" [(ngModel)]="termsId" name="select1" class="form-control"
+                                        (change)="onTermsChangeds()" [disabled]="!terms?.length">
+                                        <option [value]="0"> {{util.translate('Please select')}} </option>
+                                        <option *ngFor="let item of terms" [value]="item.id"> {{item.name}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="select1"> {{util.translate('Select Subjects')}}
+                                    </label>
+                                    <select id="select1" [(ngModel)]="subjectsId" name="select1" class="form-control"
+                                        [disabled]="!subjects?.length">
+                                        <option [value]="0">{{util.translate('Please select')}} </option>
+                                        <option *ngFor="let item of subjects" [value]="item.id"> {{item.name}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email">{{util.translate('Total Questions')}}
+                                    </label>
+                                    <input type="number" class="form-control"
+                                        [placeholder]="util.translate('Total Questions')" [(ngModel)]="totalQuestions"
+                                        (input)="onLengthChanged()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email"> {{util.translate('Passing Marks')}}
+                                    </label>
+                                    <input type="number" class="form-control"
+                                        [placeholder]="util.translate('Passing Marks')" autocomplete="off"
+                                        [(ngModel)]="passingMarks">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="select1"> {{util.translate('Have Negative?')}}
+                                    </label>
+                                    <select id="select1" [(ngModel)]="haveNegative" name="select1" class="form-control">
+                                        <option [value]="0">{{util.translate('Not Applicable')}} </option>
+                                        <option [value]="1"> {{util.translate('Have Negative Markings')}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email">
+                                        {{util.translate('Negative Markings Per Questions')}} </label>
+                                    <input type="number" class="form-control"
+                                        [placeholder]="util.translate('Negative Markings Per Questions')"
+                                        autocomplete="off" [(ngModel)]="negativeMarks" [disabled]="!haveNegative">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email">
+                                        {{util.translate('Exam Start Date & Time')}} </label>
+                                    <input type="date" class="form-control"
+                                        [placeholder]="util.translate('Exam Start Date & Time')" autocomplete="off"
+                                        [(ngModel)]="startTime">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="hf-email"> {{util.translate('Exam End Date & Time')}}
+                                    </label>
+                                    <input type="date" class="form-control" placeholder="Exam End Date & Time"
+                                        autocomplete="off" [(ngModel)]="endTime">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="questionsList?.length">
+                <div class="card-header">
+                    <strong> {{util.translate("Question's")}} </strong> {{util.translate('List')}}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th> {{util.translate('Id')}} </th>
+                                    <th> {{util.translate('Question')}} </th>
+                                    <th> {{util.translate('Total Options')}} </th>
+                                    <th> {{util.translate('Options')}} </th>
+                                    <th> {{util.translate('Answer')}} </th>
+                                    <th> {{util.translate('Image')}} </th>
+                                    <th> {{util.translate('Timout')}} </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of questionsList;let i = index">
+                                    <td> {{item.id}} </td>
+                                    <td>
+                                        <textarea type="text" [placeholder]="util.translate('Add Questions')"
+                                            [class]="submitted === true && item.qustion =='' ?'form-control is-invalid':'form-control'"
+                                            class="form-control" rows="3" [(ngModel)]="item.qustion"
+                                            [ngModelOptions]="{standalone: true}"> </textarea>
+                                    </td>
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="hf-email">
+                                                    {{util.translate('Total Options')}}
+                                                </label>
+                                                <input type="number" [ngModelOptions]="{standalone: true}"
+                                                    [class]="submitted === true && item.total_options == 0 ?'form-control is-invalid':'form-control'"
+                                                    (input)="onTotalOptionsChanged(i)"
+                                                    [placeholder]="util.translate('Total Options')" autocomplete="off"
+                                                    [(ngModel)]="item.total_options">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex;flex-direction: column;">
+                                            <div *ngFor="let sub of item.options;let options = index;"
+                                                style="display: flex;flex-direction: row;align-items: center;">
+                                                <label style="margin-right: 10px;"> {{optionsIndex[options]}} </label>
+                                                <input type="text" [placeholder]="util.translate('Options')"
+                                                    [class]="submitted === true && sub.answer =='' ?'form-control is-invalid':'form-control'"
+                                                    class="form-control" [(ngModel)]="sub.answer"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select id="select1" [(ngModel)]="item.answer" name="select1"
+                                            [ngModelOptions]="{standalone: true}" class="form-control"
+                                            [class]="submitted === true && item.answer == null ?'form-control is-invalid':'form-control'">
+                                            <option [value]="null"> {{util.translate('Please select')}} </option>
+                                            <option *ngFor="let ans of item.options;let ansKey = index;"
+                                                [value]="ansKey">
+                                                {{optionsIndex[ansKey]}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td style="display: flex; flex-direction: column; align-items: center;">
+                                        <label class="switch switch-label switch-pill switch-secondary">
+                                            <input type="checkbox" class="switch-input" [(ngModel)]="item.haveImage"
+                                                [ngModelOptions]="{standalone: true}" [checked]="item.haveImage">
+                                            <span class="switch-slider" data-checked="&#x2713;"
+                                                data-unchecked="&#x2715;"></span>
+                                        </label>
+                                        <div *ngIf="item.haveImage">
+                                            <div class="back_img_color" (click)="selectImage.click()"
+                                                [ngStyle]="{'background-image':'url('+api.imageUrl+item.imageURL +'),url(assets/img/dummy.jpeg)'}">
+
+                                            </div>
+                                            <p style="font-size: 8px;"> {{util.translate('click to upload image')}} </p>
+                                            <input type="file" (change)="uploadQuestionImage($event.target.files,i)"
+                                                style="display: none" #selectImage>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <select id="select1" [(ngModel)]="item.minute" name="select1"
+                                                    class="form-control" [ngModelOptions]="{standalone: true}"
+                                                    [class]="submitted === true && item.minute =='' ?'form-control is-invalid':'form-control'">
+                                                    <option [value]="0"> {{util.translate('Minutes')}} </option>
+                                                    <option *ngFor="let item of minutesArray" [value]="item"> {{item}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <select id="select1" [(ngModel)]="item.secounds" name="select1"
+                                                    [ngModelOptions]="{standalone: true}" class="form-control"
+                                                    [class]="submitted === true && item.secounds =='' ?'form-control is-invalid':'form-control'">
+                                                    <option [value]="0"> {{util.translate('Seconds')}} </option>
+                                                    <option *ngFor="let item of secondsArray" [value]="item"> {{item}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-footer">
+                    <div class="form-check row" style="margin: 20px 0px ;">
+                        <div class="col-12" style="padding: 0px !important;">
+                            <input class="form-check-input" type="checkbox" value="option1" id="checkbox1"
+                                [(ngModel)]="sendNotification">
+                            <label class="form-check-label" for="checkbox1">
+                                {{util.translate('Send Notification to Students')}}
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" *ngIf="examId == ''" class="btn btn-sm btn-primary" (click)="saveData(1)"><i
+                            class="fa fa-dot-circle-o"></i>
+                        {{util.translate('Submit')}} </button>
+                    <button type="submit" *ngIf="examId != ''" class="btn btn-sm btn-primary"
+                        (click)="updateCollection()"><i class="fa fa-dot-circle-o"></i>
+                        {{util.translate('Update')}} </button>
+                    <button type="reset" class="btn btn-sm btn-danger" (click)="clearData(true)"><i
+                            class="fa fa-ban"></i>
+                        {{util.translate('Reset')}} </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
